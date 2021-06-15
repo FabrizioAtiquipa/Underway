@@ -13,19 +13,51 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home'),
-      actions: [
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed:  () => Navigator.pushNamed(context, 'producto')
-          .then((value) => setState(() {})),
-            )
+      appBar: AppBar(
+        title: Text('Home'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => Navigator.pushNamed(context, 'producto')
+                .then((value) => setState(() {})),
+          )
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.amber,
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Image.asset('assets/fondolateral.jpg'),
+                  ),
+                  Text("UNDERWAY"),
+                  SizedBox(
+                    height: 10.0,
+                  )
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Transportista'),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.pushReplacementNamed(context, 'transportista');
+              },
+            ),
           ],
+        ),
       ),
       body: _crearListado(),
     );
   }
-  
+
   Widget _crearListado() {
     return FutureBuilder(
         future: productosProvider.cargarProductos(),
