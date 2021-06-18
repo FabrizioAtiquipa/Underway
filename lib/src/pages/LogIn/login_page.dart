@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
             elevation: 0.0,
-            color: Color(0xff003FFF),
+            color: Color(0xffFFB001),
             textColor: Colors.white,
             onPressed: snapshot.hasData ? () => _login(bloc, context) : null);
       },
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                 Text('Iniciar Sesión',
                     style: TextStyle(
                         fontSize: 20.0,
-                        color: Color(0xff003FFF),
+                        color: Color(0xffFFB001),
                         fontWeight: FontWeight.bold)),
                 SizedBox(height: 20.0),
                 _crearEmail(bloc),
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           TextButton(
-              child: Text('Crear una nueva cuenta'),
+              child: Text('Crear una nueva cuenta', style: TextStyle(color: Color(0xffFFB001)),),
               onPressed: () =>
                   Navigator.pushReplacementNamed(context, 'registro')),
           SizedBox(height: 100.0)
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
           child: TextField(
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-                icon: Icon(Icons.mail_outline, color: Color(0xff003FFF)),
+                icon: Icon(Icons.mail_outline, color: Color(0xffFFB001)),
                 hintText: 'ejemplo@correo.com',
                 labelText: 'Correo electrónico',
                 counterText: snapshot.data,
@@ -130,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
           child: TextField(
             obscureText: hidePassword,
             decoration: InputDecoration(
-              icon: Icon(Icons.lock_outline, color: Color(0xff003FFF)),
+              icon: Icon(Icons.lock_outline, color: Color(0xffFFB001)),
               labelText: 'Contraseña',
               counterText: snapshot.data,
               errorText: snapshot.error,

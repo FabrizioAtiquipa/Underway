@@ -3,6 +3,8 @@ import 'package:proyectounderway/src/bloc/provider.dart';
 import 'package:proyectounderway/src/pages/LogIn/registro_page.dart';
 import 'package:proyectounderway/src/pages/Map/map_page.dart';
 import 'package:proyectounderway/src/pages/LogIn/login_page.dart';
+import 'package:proyectounderway/src/pages/details/details-screen.dart';
+import 'package:proyectounderway/src/pages/oferta/card_screen.dart';
 import 'package:proyectounderway/src/pages/principal_page.dart';
 import 'package:proyectounderway/src/pages/products/home_page.dart';
 import 'package:proyectounderway/src/pages/products/product.dart';
@@ -30,8 +32,10 @@ class MyApp extends StatelessWidget {
           'home': (BuildContext context) => HomePage(),
           'registro': (BuildContext context) => RegistroPage(),
           'principal': (BuildContext context) => PincipalPage(),
+          'detalles': (BuildContext context) => DetailsScreen(),
+          'oferta': (BuildContext context) => CardPage(),
         },
-        theme: ThemeData(primaryColor: Color(0xff003FFF)),
+        theme: ThemeData(primaryColor: Color(0xffFFB001)),
       ),
     );
   }

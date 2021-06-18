@@ -1,11 +1,11 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectounderway/src/pages/Map/map_page.dart';
+import 'package:proyectounderway/src/pages/oferta/card_screen.dart';
 import 'package:proyectounderway/src/pages/products/home_page.dart';
 import 'package:proyectounderway/src/providers/productos_provider.dart';
 
 class PincipalPage extends StatefulWidget {
-
   @override
   _PincipalPageState createState() => _PincipalPageState();
 }
@@ -15,6 +15,7 @@ class _PincipalPageState extends State<PincipalPage> {
   int _page = 0;
   final MapScreen _map = MapScreen();
   final HomePage _home = HomePage();
+  final CardPage _card = CardPage();
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +24,14 @@ class _PincipalPageState extends State<PincipalPage> {
       body: _showPage,
       bottomNavigationBar: CurvedNavigationBar(
         index: 0,
-        color: Color(0xff003FFF),
-        buttonBackgroundColor: Color(0xff003FFF),
+        color: Color(0xffFFB001),
+        buttonBackgroundColor: Color(0xffFFB001),
         backgroundColor: Colors.transparent,
         height: 50.0,
         items: <Widget>[
           Icon(Icons.list, size: 30, color: Colors.white),
           Icon(Icons.map, size: 30, color: Colors.white),
+          Icon(Icons.monetization_on, size: 30, color: Colors.white),
         ],
         onTap: (int index) {
           setState(() {
@@ -39,6 +41,7 @@ class _PincipalPageState extends State<PincipalPage> {
       ),
     );
   }
+
   Widget _showPage = HomePage();
   Widget _pageChooser(int page) {
     switch (page) {
@@ -47,6 +50,9 @@ class _PincipalPageState extends State<PincipalPage> {
         break;
       case 1:
         return _map;
+        break;
+      case 2:
+        return _card;
         break;
     }
   }

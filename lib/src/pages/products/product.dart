@@ -28,13 +28,15 @@ class _ProductoPageState extends State<ProductoPage> {
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
-          title: Text('Product Name'),
+          title: Text('Product Name', style: TextStyle(color: Colors.white),),
           actions: [
             IconButton(
+              color: Colors.white,
               icon: Icon(Icons.photo_size_select_actual),
               onPressed: _seleccionarFoto,
             ),
             IconButton(
+              color: Colors.white,
               icon: Icon(Icons.camera),
               onPressed: _tomarFoto,
             ),
@@ -145,6 +147,7 @@ class _ProductoPageState extends State<ProductoPage> {
         icon: Icon(Icons.save),
         label: Text('Guardar'),
         style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Color(0xffFFB001)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),
@@ -155,7 +158,7 @@ class _ProductoPageState extends State<ProductoPage> {
     return SwitchListTile(
       value: producto.disponible,
       title: Text('Disponible'),
-      activeColor: Colors.deepPurple,
+      activeColor: Color(0xffFFB001),
       onChanged: (value) => setState(() {
         producto.disponible = value;
       }),
