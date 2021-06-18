@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:proyectounderway/src/pages/Map/directions_model.dart';
 import 'package:proyectounderway/src/pages/Map/directions_repository.dart';
 
@@ -9,11 +10,25 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  var location;
+  LatLng latlng;
+  void getCurrentLocationCar() async {
+    location = await _tracker.getLocation();
+    latlng = LatLng(location.latitude, location.longitude);
+    print('********************************************');
+    print(location);
+    print(location.latitude);
+    print(location.longitude);
+    print(latlng);
+    print('*********************************************');
+  }
+
   static const _initialCameraPosition = CameraPosition(
     target: LatLng(-16.39889, -71.535),
-    zoom: 11.5,
+    zoom: 17.5,
   );
 
+  Location _tracker = Location();
   GoogleMapController _googleMapController;
   Marker _origin;
   Marker _destination;
@@ -29,6 +44,8 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('console log in r');
+    getCurrentLocationCar();
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -39,8 +56,8 @@ class _MapScreenState extends State<MapScreen> {
               onPressed: () => _googleMapController.animateCamera(
                 CameraUpdate.newCameraPosition(
                   CameraPosition(
-                    target: _origin.position,
-                    zoom: 14.5,
+                    target: LatLng(location.latitude, location.longitude),
+                    zoom: 18.5,
                     tilt: 50.0,
                   ),
                 ),
@@ -56,8 +73,8 @@ class _MapScreenState extends State<MapScreen> {
               onPressed: () => _googleMapController.animateCamera(
                 CameraUpdate.newCameraPosition(
                   CameraPosition(
-                    target: _destination.position,
-                    zoom: 14.5,
+                    target: LatLng(location.latitude, location.longitude),
+                    zoom: 18.5,
                     tilt: 50.0,
                   ),
                 ),
@@ -138,10 +155,12 @@ class _MapScreenState extends State<MapScreen> {
           backgroundColor: Theme.of(context).primaryColor,
           foregroundColor: Colors.white,
           onPressed: () => _googleMapController.animateCamera(
-            _info != null
-                ? CameraUpdate.newLatLngBounds(_info.bounds, 100.0)
-                : CameraUpdate.newCameraPosition(_initialCameraPosition),
+            CameraUpdate.newCameraPosition(CameraPosition(
+              target: latlng,
+              zoom: 17.5,
+            )),
           ),
+          // print('Hola mundo'),
           child: const Icon(Icons.center_focus_strong),
         ),
       ),
