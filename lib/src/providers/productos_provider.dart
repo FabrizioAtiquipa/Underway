@@ -4,12 +4,14 @@ import 'package:mime_type/mime_type.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:proyectounderway/src/models/producto_model.dart';
+import 'package:proyectounderway/src/utils/global_arguments.dart';
 
 class ProductosProvider {
   final String _url = 'underway-105f6-default-rtdb.firebaseio.com';
+  GlobalArguments _globalArguments = GlobalArguments();
 
   Future<bool> crearProducto(ProductModel producto) async {
-    final url = Uri.https(_url, 'cargas.json');
+    final url = Uri.https(_url, 'usuarios/${_globalArguments.uid}/cargas.json');
     final resp = await http.post(url, body: productModelToJson(producto));
     final decodedData = json.decode(resp.body);
     print(decodedData);
@@ -17,7 +19,7 @@ class ProductosProvider {
   }
 
   Future<List<ProductModel>> cargarProductos() async {
-    final url = Uri.https(_url, 'cargas.json');
+    final url = Uri.https(_url, 'usuarios/${_globalArguments.uid}/cargas.json');
     final resp = await http.get(url);
     final Map<String, dynamic> decodedData = json.decode(resp.body);
     final List<ProductModel> productos = new List();
@@ -34,7 +36,7 @@ class ProductosProvider {
   }
 
   Future<int> borrarProducto(String id) async {
-    final url = Uri.https(_url, 'cargas/$id.json');
+    final url = Uri.https(_url, 'usuarios/${_globalArguments.uid}/cargas/$id.json');
     final resp = await http.delete(url);
 
     print(json.decode(resp.body));
@@ -43,7 +45,7 @@ class ProductosProvider {
   }
 
   Future<bool> editarProducto(ProductModel producto) async {
-    final url = Uri.https(_url, 'cargas/${producto.id}.json');
+    final url = Uri.https(_url, 'usuarios/${_globalArguments.uid}/cargas/${producto.id}.json');
     final resp = await http.put(url, body: productModelToJson(producto));
     final decodedData = json.decode(resp.body);
     print(decodedData);

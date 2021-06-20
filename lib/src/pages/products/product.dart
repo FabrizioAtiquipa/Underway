@@ -55,6 +55,8 @@ class _ProductoPageState extends State<ProductoPage> {
                       _crearDestinoInicio(),
                       _crearDestinoFin(),
                       _crearPrecio(),
+                      _crearTipo(),
+                      _crearPeso(),
                       _crearDisponoble(),
                       _crearBoton()
                     ],
@@ -64,10 +66,10 @@ class _ProductoPageState extends State<ProductoPage> {
 
   Widget _crearNombre() {
     return TextFormField(
-      initialValue: producto.nombrecarga,
+      initialValue: producto.nombre_carga,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(labelText: 'Producto'),
-      onSaved: (value) => producto.nombrecarga = value,
+      onSaved: (value) => producto.nombre_carga = value,
       validator: (value) {
         if (value.length < 3) {
           return 'Ingrese el nombre del producto';
@@ -80,10 +82,10 @@ class _ProductoPageState extends State<ProductoPage> {
 
   Widget _crearDestinoInicio() {
     return TextFormField(
-      initialValue: producto.ubicacionInicio,
+      initialValue: producto.ubicacion_inicio,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(labelText: 'Ubicación de recojo'),
-      onSaved: (value) => producto.ubicacionInicio = value,
+      onSaved: (value) => producto.ubicacion_inicio = value,
       validator: (value) {
         if (value.length < 3) {
           return 'Ingrese la ubicacion de donde se recogerá la carga';
@@ -96,10 +98,10 @@ class _ProductoPageState extends State<ProductoPage> {
 
   Widget _crearDestinoFin() {
     return TextFormField(
-      initialValue: producto.ubicacionDestino,
+      initialValue: producto.ubicacion_destino,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(labelText: 'Ubicación de destino'),
-      onSaved: (value) => producto.ubicacionDestino = value,
+      onSaved: (value) => producto.ubicacion_destino = value,
       validator: (value) {
         if (value.length < 3) {
           return 'Ingrese la ubicación a donde desea que llegue su carga';
@@ -112,13 +114,45 @@ class _ProductoPageState extends State<ProductoPage> {
 
   Widget _crearDescripcion() {
     return TextFormField(
-      initialValue: producto.descripcionPedido,
+      initialValue: producto.descripcion_carga,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(labelText: 'Descripción del producto'),
-      onSaved: (value) => producto.descripcionPedido = value,
+      onSaved: (value) => producto.descripcion_carga = value,
       validator: (value) {
         if (value.length < 3) {
           return 'Ingrese una breve descripción de su producto';
+        } else {
+          return null;
+        }
+      },
+    );
+  }
+
+   Widget _crearTipo() {
+    return TextFormField(
+      initialValue: producto.tipo,
+      textCapitalization: TextCapitalization.sentences,
+      decoration: InputDecoration(labelText: 'Tipo de producto'),
+      onSaved: (value) => producto.tipo = value,
+      validator: (value) {
+        if (value.length < 3) {
+          return 'Ingrese el tipo de producto';
+        } else {
+          return null;
+        }
+      },
+    );
+  }
+
+  Widget _crearPeso() {
+    return TextFormField(
+      initialValue: producto.peso,
+      textCapitalization: TextCapitalization.sentences,
+      decoration: InputDecoration(labelText: 'Peso del producto'),
+      onSaved: (value) => producto.peso = value,
+      validator: (value) {
+        if (value.length < 3) {
+          return 'Ingrese el peso del producto';
         } else {
           return null;
         }
@@ -172,7 +206,7 @@ class _ProductoPageState extends State<ProductoPage> {
       () => _guardando = true,
     );
     if (_foto != null) {
-      producto.carga = await productoProvider.subirImagen(_foto);
+      producto.imagen_url = await productoProvider.subirImagen(_foto);
     }
     if (producto.id == null) {
       productoProvider.crearProducto(producto);
@@ -199,9 +233,9 @@ class _ProductoPageState extends State<ProductoPage> {
   }
 
   _mostrarFoto() {
-    if (producto.carga != null) {
+    if (producto.imagen_url != null) {
       return FadeInImage(
-        image: NetworkImage(producto.carga),
+        image: NetworkImage(producto.imagen_url),
         placeholder: AssetImage('assets/jar-loading.gif'),
         height: 300,
         fit: BoxFit.contain
@@ -244,7 +278,7 @@ class _ProductoPageState extends State<ProductoPage> {
 
     _foto = (pickedFile != null) ? File(pickedFile.path) : _foto;
     if (_foto != null) {
-      producto.carga = null;
+      producto.imagen_url = null;
     }
     setState(() {});
   }

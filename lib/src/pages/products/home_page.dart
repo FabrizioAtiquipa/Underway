@@ -93,18 +93,18 @@ class _HomePageState extends State<HomePage> {
               borderOnForeground: true,
               child: Column(
                 children: [
-                  (producto.carga == null)
+                  (producto.imagen_url == null)
                       ? Image(image: AssetImage('assets/no-image.png'))
                       : FadeInImage(
-                          image: NetworkImage(producto.carga),
+                          image: NetworkImage(producto.imagen_url),
                           placeholder: AssetImage('assets/jar-loading.gif'),
                           height: 200.0,
                           width: double.infinity,
                           fit: BoxFit.cover),
                   ListTile(
                     title:
-                        Text('${producto.nombrecarga} - S/.${producto.precio}'),
-                    subtitle: Text('${producto.descripcionPedido}'),
+                        Text('${producto.nombre_carga} - ${producto.tipo}'),
+                    subtitle: Text('${producto.descripcion_carga}'),
                     onTap: () => Navigator.pushNamed(context, 'producto',
                             arguments: producto)
                         .then((value) => setState(() {})),
