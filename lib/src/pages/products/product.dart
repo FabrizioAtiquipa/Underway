@@ -206,7 +206,7 @@ class _ProductoPageState extends State<ProductoPage> {
       () => _guardando = true,
     );
     if (_foto != null) {
-      producto.carga = await productoProvider.subirImagen(_foto);
+      producto.imagen_url = await productoProvider.subirImagen(_foto);
     }
     if (producto.id == null) {
       productoProvider.crearProducto(producto);
@@ -233,9 +233,9 @@ class _ProductoPageState extends State<ProductoPage> {
   }
 
   _mostrarFoto() {
-    if (producto.carga != null) {
+    if (producto.imagen_url != null) {
       return FadeInImage(
-        image: NetworkImage(producto.carga),
+        image: NetworkImage(producto.imagen_url),
         placeholder: AssetImage('assets/jar-loading.gif'),
         height: 300,
         fit: BoxFit.contain
@@ -278,7 +278,7 @@ class _ProductoPageState extends State<ProductoPage> {
 
     _foto = (pickedFile != null) ? File(pickedFile.path) : _foto;
     if (_foto != null) {
-      producto.carga = null;
+      producto.imagen_url = null;
     }
     setState(() {});
   }

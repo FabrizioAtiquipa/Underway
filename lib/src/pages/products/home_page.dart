@@ -93,10 +93,10 @@ class _HomePageState extends State<HomePage> {
               borderOnForeground: true,
               child: Column(
                 children: [
-                  (producto.carga == null)
+                  (producto.imagen_url == null)
                       ? Image(image: AssetImage('assets/no-image.png'))
                       : FadeInImage(
-                          image: NetworkImage(producto.carga),
+                          image: NetworkImage(producto.imagen_url),
                           placeholder: AssetImage('assets/jar-loading.gif'),
                           height: 200.0,
                           width: double.infinity,
