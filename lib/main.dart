@@ -9,6 +9,7 @@ import 'package:proyectounderway/src/pages/principal_page.dart';
 import 'package:proyectounderway/src/pages/products/home_page.dart';
 import 'package:proyectounderway/src/pages/products/product.dart';
 import 'package:proyectounderway/src/preferencias_usuario/preferencias_usuario.dart';
+import 'package:proyectounderway/src/pages/products/transportista_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
           'home': (BuildContext context) => HomePage(),
           'registro': (BuildContext context) => RegistroPage(),
           'principal': (BuildContext context) => PincipalPage(),
+          'transportista': (BuildContext context) => Transportista(),
           'detalles': (BuildContext context) => DetailsScreen(),
           'oferta': (BuildContext context) => CardPage(),
         },
