@@ -21,7 +21,7 @@ class  CrearFondo extends StatelessWidget {
     height: 350.0,
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
-        color: Color(0xff003FFF)),
+        color: Color(0xffFFB001)),
   );
   return Stack(
     children: <Widget>[

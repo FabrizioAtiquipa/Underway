@@ -32,7 +32,7 @@ class _RegistroPageState extends State<RegistroPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
             elevation: 0.0,
-            color: Color(0xff003FFF),
+            color: Color(0xffFFB001),
             textColor: Colors.white,
             onPressed: snapshot.hasData ? () => _register(bloc ,context) : null);
       },
@@ -79,7 +79,7 @@ class _RegistroPageState extends State<RegistroPage> {
                 Text('Crear una Cuenta',
                     style: TextStyle(
                         fontSize: 20.0,
-                        color: Color(0xff003FFF),
+                        color: Color(0xffFFB001),
                         fontWeight: FontWeight.bold)),
                 SizedBox(height: 20.0),
                 _crearEmail(bloc),
@@ -91,7 +91,7 @@ class _RegistroPageState extends State<RegistroPage> {
             ),
           ),
           TextButton(
-              child: Text('Ya tengo una cuenta, ir al Login'),
+              child: Text('Ya tengo una cuenta, ir al Login', style: TextStyle(color: Color(0xffFFB001))),
               onPressed: () =>
                   Navigator.pushReplacementNamed(context, 'login_page')),
           SizedBox(height: 100.0)
@@ -109,7 +109,7 @@ class _RegistroPageState extends State<RegistroPage> {
           child: TextField(
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-                icon: Icon(Icons.mail_outline, color: Color(0xff003FFF)),
+                icon: Icon(Icons.mail_outline, color: Color(0xffFFB001)),
                 hintText: 'ejemplo@correo.com',
                 labelText: 'Correo electrónico',
                 counterText: snapshot.data,
@@ -130,7 +130,7 @@ class _RegistroPageState extends State<RegistroPage> {
           child: TextField(
             obscureText: hidePassword,
             decoration: InputDecoration(
-              icon: Icon(Icons.lock_outline, color: Color(0xff003FFF)),
+              icon: Icon(Icons.lock_outline, color: Color(0xffFFB001)),
               labelText: 'Contraseña',
               counterText: snapshot.data,
               errorText: snapshot.error,

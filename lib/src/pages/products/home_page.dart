@@ -14,9 +14,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text(
+          'Home',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           IconButton(
+            color: Colors.white,
             icon: Icon(Icons.add),
             onPressed: () => Navigator.pushNamed(context, 'producto')
                 .then((value) => setState(() {})),
@@ -81,26 +85,98 @@ class _HomePageState extends State<HomePage> {
         onDismissed: (direction) {
           productosProvider.borrarProducto(producto.id);
         },
-        child: Card(
-            child: Column(
-          children: [
-            (producto.carga == null)
-                ? Image(image: AssetImage('assets/no-image.png'))
-                : FadeInImage(
-                    image: NetworkImage(producto.carga),
-                    placeholder: AssetImage('assets/jar-loading.gif'),
-                    height: 300.0,
-                    width: double.infinity,
-                    fit: BoxFit.cover),
-            ListTile(
-              title: Text('${producto.nombrecarga} - ${producto.precio}'),
-              subtitle: Text(
-                  '${producto.ubicacionInicio} - ${producto.ubicacionDestino}'),
-              onTap: () =>
-                  Navigator.pushNamed(context, 'producto', arguments: producto)
-                      .then((value) => setState(() {})),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+          child: Card(
+              shadowColor: Color(0xFF282727),
+              clipBehavior: Clip.antiAlias,
+              borderOnForeground: true,
+              child: Column(
+                children: [
+                  (producto.carga == null)
+                      ? Image(image: AssetImage('assets/no-image.png'))
+                      : FadeInImage(
+                          image: NetworkImage(producto.carga),
+                          placeholder: AssetImage('assets/jar-loading.gif'),
+                          height: 200.0,
+                          width: double.infinity,
+                          fit: BoxFit.cover),
+                  ListTile(
+                    title:
+                        Text('${producto.nombrecarga} - S/.${producto.precio}'),
+                    subtitle: Text('${producto.descripcionPedido}'),
+                    onTap: () => Navigator.pushNamed(context, 'producto',
+                            arguments: producto)
+                        .then((value) => setState(() {})),
+                  ),
+                  ButtonBar(alignment: MainAxisAlignment.end, children: [
+                    TextButton.icon(
+                      onPressed: () {
+                        _mostrarAlert(context);
+                      },
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Color(0xffFFB001)),
+                      ),
+                      label: Text('Ofertar'),
+                      icon: Icon(Icons.monetization_on),
+                    ),
+                    TextButton.icon(
+                      onPressed: () => Navigator.pushNamed(context, 'detalles')
+                          .then((value) => setState(() {})),
+                      //onPressed: () {Navigator.pushNamed(context, 'detalles');},
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Color(0xffFFB001)),
+                      ),
+                      label: Text('Detalles'),
+                      icon: Icon(Icons.book_online_outlined),
+                    )
+                  ]),
+                ],
+              )),
+        ));
+  }
+
+  void _mostrarAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Text('Oefertar'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Enviar Oferta'),
+                TextFormField(
+                  initialValue: '0',
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(labelText: 'Precio'),
+                ),
+                TextFormField(
+                  initialValue: 'N.A',
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(labelText: 'Detalles del camion'),
+                ),
+                TextFormField(
+                  initialValue: '0.0.0',
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(labelText: 'Tiempo de duracion'),
+                )
+              ],
             ),
-          ],
-        )));
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Cancelar')),
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Enviar')),
+            ],
+          );
+        });
   }
 }
