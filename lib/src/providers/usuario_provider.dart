@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:proyectounderway/src/preferencias_usuario/preferencias_usuario.dart';
+import 'package:proyectounderway/src/utils/global_arguments.dart';
 
 class UsuarioProvider {
   final String _firebaseToken = 'AIzaSyDDJx5rAms7z3WJqJtG7fChf9821c7y-3I';
   final _prefs = new PreferenciasUsuario();
+  GlobalArguments _globalArguments = GlobalArguments();
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     final authData = {
@@ -20,6 +22,7 @@ class UsuarioProvider {
     print(decodedResp);
     if (decodedResp.containsKey('idToken')) {
       _prefs.token = decodedResp['idToken'];
+      _globalArguments.setUid(decodedResp['localId']);
       return {'ok': true, 'token': decodedResp['idToken']};
     } else {
       return {'ok': false, 'mensaje': decodedResp['error']['message']};
@@ -28,6 +31,8 @@ class UsuarioProvider {
 
   Future<Map<String, dynamic>> nuevoUsuario(
       String email, String password) async {
+    final url = Uri.https('underway-105f6-default-rtdb.firebaseio.com', 'usuarios.json');
+    //final resp = await http.post(url, body: productModelToJson(producto));
     final authData = {
       'email': email,
       'password': password,

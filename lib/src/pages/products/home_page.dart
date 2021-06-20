@@ -103,8 +103,8 @@ class _HomePageState extends State<HomePage> {
                           fit: BoxFit.cover),
                   ListTile(
                     title:
-                        Text('${producto.nombrecarga} - S/.${producto.precio}'),
-                    subtitle: Text('${producto.descripcionPedido}'),
+                        Text('${producto.nombre_carga} - ${producto.tipo}'),
+                    subtitle: Text('${producto.descripcion_carga}'),
                     onTap: () => Navigator.pushNamed(context, 'producto',
                             arguments: producto)
                         .then((value) => setState(() {})),

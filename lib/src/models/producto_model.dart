@@ -8,45 +8,53 @@ class ProductModel {
         this.id,
         this.foto,
         this.carga,
-        this.nombrecarga = '',
-        this.ubicacionInicio = '',
-        this.ubicacionDestino = '',
+        this.nombre_carga = '',
+        this.tipo = '',
+        this.ubicacion_inicio = '',
+        this.ubicacion_destino = '',
         this.precio = 0.0,
+        this.peso = '',
         this.disponible = true,
-        this.descripcionPedido,
+        this.descripcion_carga = '',
     });
 
     String id;
     String foto;
     String carga;
-    String nombrecarga;
-    String ubicacionInicio;
-    String ubicacionDestino;
+    String nombre_carga;
+    String tipo;
+    String ubicacion_inicio;
+    String ubicacion_destino;
     double precio;
+    String peso;
     bool disponible;
-    String descripcionPedido;
+    String descripcion_carga;
 
     factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
         foto: json["foto"],
         carga: json["carga"],
-        nombrecarga: json["nombrecarga"],
-        ubicacionInicio: json["ubicacionInicio"],
-        ubicacionDestino: json["ubicacionDestino"],
+        nombre_carga: json["nombre_carga"],
+        tipo: json["tipo"],
+        ubicacion_inicio: json["ubicacion_inicio"],
+        ubicacion_destino: json["ubicacion_destino"],
         precio: json["precio"],
+        peso: json["peso"],
         disponible: json["disponible"],
-        descripcionPedido: json["descripcionPedido"],
+        descripcion_carga: json["descripcion_carga"],
     );
 
     Map<String, dynamic> toJson() => {
         //"id": id,
         "foto": foto,
         "carga": carga,
-        "nombrecarga": nombrecarga,
-        "ubicacionInicio": ubicacionInicio,
-        "ubicacionDestino": ubicacionDestino,
+        "nombre_carga": nombre_carga,
+        "tipo": tipo,
+        "ubicacion_inicio": ubicacion_inicio,
+        "ubicacion_destino": ubicacion_destino,
         "precio": precio,
+        "peso": peso,
         "disponible": disponible,
-        "descripcionPedido": descripcionPedido,
+        "descripcion_carga": descripcion_carga,
     };
 }
