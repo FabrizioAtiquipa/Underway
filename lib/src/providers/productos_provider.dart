@@ -11,9 +11,9 @@ class ProductosProvider {
   GlobalArguments _globalArguments = GlobalArguments();
 
   Future<bool> crearProducto(ProductModel producto) async {
-    final url_detalles = Uri.https(_url, 'cargas.json');
-    final resp_detalles = await http.post(url_detalles, body: productModelToJson(producto));
-    final decodedData = json.decode(resp_detalles.body);
+    final url = Uri.https(_url, 'cargas.json');
+    final resp = await http.post(url, body: productModelToJson(producto));
+    final decodedData = json.decode(resp.body);
 
     print(decodedData);
     return true;
