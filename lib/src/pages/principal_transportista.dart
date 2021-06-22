@@ -1,19 +1,20 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:proyectounderway/src/pages/oferta/card_screen.dart';
+import 'package:proyectounderway/src/pages/Map/map_page.dart';
 import 'package:proyectounderway/src/pages/products/home_page.dart';
+import 'package:proyectounderway/src/pages/products/transportista_page.dart';
 import 'package:proyectounderway/src/providers/productos_provider.dart';
 
-class PincipalPage extends StatefulWidget {
+class PincipalTransportista extends StatefulWidget {
   @override
-  _PincipalPageState createState() => _PincipalPageState();
+  _PincipalTransportistaState createState() => _PincipalTransportistaState();
 }
 
-class _PincipalPageState extends State<PincipalPage> {
+class _PincipalTransportistaState extends State<PincipalTransportista> {
   final productosProvider = new ProductosProvider();
   int _page = 0;
-  final HomePage _home = HomePage();
-  final CardPage _card = CardPage();
+  final MapScreen _map = MapScreen();
+  final Transportista _home = Transportista();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class _PincipalPageState extends State<PincipalPage> {
         height: 50.0,
         items: <Widget>[
           Icon(Icons.list, size: 30, color: Colors.white),
-          Icon(Icons.monetization_on, size: 30, color: Colors.white),
+          Icon(Icons.map, size: 30, color: Colors.white),
         ],
         onTap: (int index) {
           setState(() {
@@ -39,14 +40,14 @@ class _PincipalPageState extends State<PincipalPage> {
     );
   }
 
-  Widget _showPage = HomePage();
+  Widget _showPage = Transportista();
   Widget _pageChooser(int page) {
     switch (page) {
       case 0:
         return _home;
         break;
       case 1:
-        return _card;
+        return _map;
         break;
     }
   }

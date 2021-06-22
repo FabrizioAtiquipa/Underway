@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:proyectounderway/src/providers/productos_provider.dart';
+import 'package:proyectounderway/src/models/producto_model.dart';
 
 class Transportista extends StatefulWidget {
   @override
@@ -6,10 +8,13 @@ class Transportista extends StatefulWidget {
 }
 
 class _TransportistaState extends State<Transportista> {
+
+  final productosProvider = new ProductosProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Transportista'),
       ),
@@ -38,116 +43,130 @@ class _TransportistaState extends State<Transportista> {
               title: Text('Modo Usuario'),
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.pushReplacementNamed(context, 'home');
+                Navigator.pushReplacementNamed(context, 'principal');
               },
             ),
           ],
         ),
       ),
-      body: ListView(
-        children: [
-          Center(
-            child: Column(
-              children: [
-                Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  margin: EdgeInsets.all(15),
-                  elevation: 10,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Column(
-                      children: <Widget>[
-                        Image(
-                          height: 300,
-                          width: 300,
-                          image: NetworkImage('image/carga.png'),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: Text(
-                            'Solicitud de carga en Lima',
-                          ),
-                        ),
-                      ],
-                    ),
+      body: _crearListado(),
+    );
+  }
+  Widget _crearListado() {
+    return FutureBuilder(
+        future: productosProvider.cargarTodosLosProductos(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
+          if (snapshot.hasData) {
+            final productos = snapshot.data;
+            return ListView.builder(
+                itemCount: productos.length,
+                itemBuilder: (context, i) => _crearItem(context, productos[i]));
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+
+  Widget _crearItem(BuildContext context, ProductModel producto) {
+    return Dismissible(
+        key: UniqueKey(),
+        background: Container(color: Colors.red),
+        onDismissed: (direction) {
+          productosProvider.borrarProducto(producto.id);
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+          child: Card(
+              shadowColor: Color(0xFF282727),
+              clipBehavior: Clip.antiAlias,
+              borderOnForeground: true,
+              child: Column(
+                children: [
+                  (producto.imagen_url == null)
+                      ? Image(image: AssetImage('assets/no-image.png'))
+                      : FadeInImage(
+                          image: NetworkImage(producto.imagen_url),
+                          placeholder: AssetImage('assets/jar-loading.gif'),
+                          height: 200.0,
+                          width: double.infinity,
+                          fit: BoxFit.cover),
+                  ListTile(
+                    title:
+                        Text('${producto.nombre_carga} - ${producto.tipo}'),
+                    subtitle: Text('${producto.descripcion_carga}'),
+                    onTap: () => Navigator.pushNamed(context, 'producto',
+                            arguments: producto)
+                        .then((value) => setState(() {})),
                   ),
-                ),
-                Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  margin: EdgeInsets.all(15),
-                  elevation: 10,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Column(
-                      children: <Widget>[
-                        Image(
-                          height: 300,
-                          width: 300,
-                          image: NetworkImage('image/paquetes.png'),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: Text('Solicitud de carga en arequipa'),
-                        ),
-                      ],
+                  ButtonBar(alignment: MainAxisAlignment.end, children: [
+                    TextButton.icon(
+                      onPressed: () {
+                        _mostrarAlert(context);
+                      },
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Color(0xffFFB001)),
+                      ),
+                      label: Text('Ofertar'),
+                      icon: Icon(Icons.monetization_on),
                     ),
-                  ),
+                    TextButton.icon(
+                      onPressed: () => Navigator.pushNamed(context, 'detalles')
+                          .then((value) => setState(() {})),
+                      //onPressed: () {Navigator.pushNamed(context, 'detalles');},
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Color(0xffFFB001)),
+                      ),
+                      label: Text('Detalles'),
+                      icon: Icon(Icons.book_online_outlined),
+                    )
+                  ]),
+                ],
+              )),
+        ));
+  }
+
+  void _mostrarAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Text('Oefertar'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Enviar Oferta'),
+                TextFormField(
+                  initialValue: '0',
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(labelText: 'Precio'),
                 ),
-                Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  margin: EdgeInsets.all(15),
-                  elevation: 10,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Column(
-                      children: <Widget>[
-                        Image(
-                          height: 300,
-                          width: 300,
-                          image: NetworkImage('image/publicacion.png'),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: Text('Solicitud para carga en mollendo'),
-                        ),
-                      ],
-                    ),
-                  ),
+                TextFormField(
+                  initialValue: 'N.A',
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(labelText: 'Detalles del camion'),
                 ),
-                Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  margin: EdgeInsets.all(15),
-                  elevation: 10,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Column(
-                      children: <Widget>[
-                        Image(
-                          height: 300,
-                          width: 300,
-                          image: NetworkImage('image/carga.png'),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: Text('Solicitud para Carga en Camana'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                TextFormField(
+                  initialValue: '0.0.0',
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(labelText: 'Tiempo de duracion'),
+                )
               ],
             ),
-          ),
-        ],
-      ),
-    );
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Cancelar')),
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Enviar')),
+            ],
+          );
+        });
   }
 }

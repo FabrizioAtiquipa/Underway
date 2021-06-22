@@ -34,6 +34,22 @@ class ProductosProvider {
 
     return productos;
   }
+  Future<List<ProductModel>> cargarTodosLosProductos() async {
+    final url = Uri.https(_url, 'cargas.json');
+    final resp = await http.get(url);
+    final Map<String, dynamic> decodedData = json.decode(resp.body);
+    final List<ProductModel> productos = new List();
+
+    if (decodedData == null) return [];
+
+    decodedData.forEach((id, prod) {
+      final prodTemp = ProductModel.fromJson(prod);
+      prodTemp.id = id;
+      productos.add(prodTemp);
+    });
+
+    return productos;
+  }
 
   Future<int> borrarProducto(String id) async {
     final url = Uri.https(_url, 'usuarios/${_globalArguments.uid}/cargas/$id.json');

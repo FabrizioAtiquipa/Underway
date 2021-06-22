@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
               title: Text('Transportista'),
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.pushReplacementNamed(context, 'transportista');
+                Navigator.pushReplacementNamed(context, 'principaltransportista');
               },
             ),
           ],
@@ -109,19 +109,7 @@ class _HomePageState extends State<HomePage> {
                             arguments: producto)
                         .then((value) => setState(() {})),
                   ),
-                  ButtonBar(alignment: MainAxisAlignment.end, children: [
-                    TextButton.icon(
-                      onPressed: () {
-                        _mostrarAlert(context);
-                      },
-                      style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Color(0xffFFB001)),
-                      ),
-                      label: Text('Ofertar'),
-                      icon: Icon(Icons.monetization_on),
-                    ),
-                    TextButton.icon(
+                  TextButton.icon(
                       onPressed: () => Navigator.pushNamed(context, 'detalles')
                           .then((value) => setState(() {})),
                       //onPressed: () {Navigator.pushNamed(context, 'detalles');},
@@ -132,7 +120,6 @@ class _HomePageState extends State<HomePage> {
                       label: Text('Detalles'),
                       icon: Icon(Icons.book_online_outlined),
                     )
-                  ]),
                 ],
               )),
         ));
