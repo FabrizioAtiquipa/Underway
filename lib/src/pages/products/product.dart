@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:proyectounderway/src/models/producto_model.dart';
 import 'package:proyectounderway/src/providers/productos_provider.dart';
 import 'package:proyectounderway/src/utils/utils.dart' as utils;
+import 'package:proyectounderway/src/utils/global_arguments.dart';
 
 class ProductoPage extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class ProductoPage extends StatefulWidget {
 }
 
 class _ProductoPageState extends State<ProductoPage> {
+  GlobalArguments _globalArguments = GlobalArguments();
   final form_key = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   ProductModel producto = new ProductModel();
@@ -209,6 +211,7 @@ class _ProductoPageState extends State<ProductoPage> {
       producto.imagen_url = await productoProvider.subirImagen(_foto);
     }
     if (producto.id == null) {
+      producto.owner_id = _globalArguments.uid;
       productoProvider.crearProducto(producto);
       mostrarSnackbar('Registro Creado');
       setState(

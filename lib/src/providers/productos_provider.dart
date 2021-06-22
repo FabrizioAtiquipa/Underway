@@ -11,15 +11,16 @@ class ProductosProvider {
   GlobalArguments _globalArguments = GlobalArguments();
 
   Future<bool> crearProducto(ProductModel producto) async {
-    final url = Uri.https(_url, 'usuarios/${_globalArguments.uid}/cargas.json');
+    final url = Uri.https(_url, 'cargas.json');
     final resp = await http.post(url, body: productModelToJson(producto));
     final decodedData = json.decode(resp.body);
+
     print(decodedData);
     return true;
   }
 
   Future<List<ProductModel>> cargarProductos() async {
-    final url = Uri.https(_url, 'usuarios/${_globalArguments.uid}/cargas.json');
+    final url = Uri.https(_url, 'cargas.json');
     final resp = await http.get(url);
     final Map<String, dynamic> decodedData = json.decode(resp.body);
     final List<ProductModel> productos = new List();
@@ -28,8 +29,10 @@ class ProductosProvider {
 
     decodedData.forEach((id, prod) {
       final prodTemp = ProductModel.fromJson(prod);
-      prodTemp.id = id;
-      productos.add(prodTemp);
+      if (prodTemp.owner_id == _globalArguments.uid){
+        prodTemp.id = id;
+        productos.add(prodTemp);
+      }
     });
 
     return productos;
