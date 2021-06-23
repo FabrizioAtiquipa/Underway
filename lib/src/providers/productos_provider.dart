@@ -55,7 +55,7 @@ class ProductosProvider {
   }
 
   Future<int> borrarProducto(String id) async {
-    final url = Uri.https(_url, 'usuarios/${_globalArguments.uid}/cargas/$id.json');
+    final url = Uri.https(_url, 'cargas/$id.json');
     final resp = await http.delete(url);
 
     print(json.decode(resp.body));
@@ -64,7 +64,7 @@ class ProductosProvider {
   }
 
   Future<bool> editarProducto(ProductModel producto) async {
-    final url = Uri.https(_url, 'usuarios/${_globalArguments.uid}/cargas/${producto.id}.json');
+    final url = Uri.https(_url, 'cargas/${producto.id}.json');
     final resp = await http.put(url, body: productModelToJson(producto));
     final decodedData = json.decode(resp.body);
     print(decodedData);
